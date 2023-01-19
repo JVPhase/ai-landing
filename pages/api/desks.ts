@@ -30,5 +30,5 @@ export const getDesks = () => {
 };
 
 export const getDesk = (id: number) => {
-  return desks[id];
+  return desks.find((desk) => desk.id === id);
 };
