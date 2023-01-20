@@ -8,9 +8,10 @@ import { getDesk } from './api/desks';
 const DeskDetail = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [desk, setDesk] = useState<any>({});
+  const [desk, setDesk] = useState<any>(null);
 
   useEffect(() => {
+    if (!id) return;
     const fetchData = () => {
       const data = getDesk(Number(id));
       setDesk(data);
@@ -18,7 +19,9 @@ const DeskDetail = () => {
     fetchData();
   }, [id]);
 
-  return (
+  if (!id) return null;
+
+  return !!desk ? (
     <div>
       <Head>
         <title>{desk.name} - Next Desk Company</title>
@@ -27,8 +30,8 @@ const DeskDetail = () => {
       <main>
         <h1 className="text-center my-10">{desk.name}</h1>
         <Image
-          src={desk.image}
-          alt={desk.name}
+          src={desk.image || 'next.svg'}
+          alt={desk.name || 'Next Desk Company'}
           className="my-10"
           width={100}
           height={100}
@@ -58,7 +61,7 @@ const DeskDetail = () => {
         }
       `}</style>
     </div>
-  );
+  ) : null;
 };
 
 export default DeskDetail;
